@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en" data-theme="cosmic" data-mode="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Lyric Pattern Analyzer pipeline</title>
+  <style>
+    :root { --bg:#0b0c10; --panel:#1f2833; --text:#c5c6c7; --accent:#66fcf1; --muted:#45a29e; --danger:#ff2d55; --font: "Space Grotesk", system-ui, sans-serif; --mono: "JetBrains Mono", ui-monospace, monospace; }
+    html[data-theme="bento"][data-mode="dark"] { --bg:#101218; --panel:#1a1f2b; --text:#e8eaed; --accent:#8ab4f8; --muted:#9aa0a6; }
+    html[data-theme="bento"][data-mode="light"] { --bg:#f4f6fb; --panel:#fff; --text:#1a1f2b; --accent:#1a73e8; --muted:#5f6368; }
+    html[data-theme="cosmic"][data-mode="dark"] { --bg:#07060a; --panel:#100c18; --text:#f4f1ea; --accent:#00e0ff; --muted:#8b5cff; }
+    html[data-theme="cosmic"][data-mode="light"] { --bg:#eef7ff; --panel:#fff; --text:#100c18; --accent:#005e6b; --muted:#5b3cc4; }
+    html[data-theme="swiss"][data-mode="dark"] { --bg:#111; --panel:#1c1c1c; --text:#f2f2f2; --accent:#ff3b30; --muted:#a1a1a1; }
+    html[data-theme="swiss"][data-mode="light"] { --bg:#f7f7f5; --panel:#fff; --text:#111; --accent:#d10000; --muted:#555; }
+    html[data-theme="aqua"][data-mode="dark"] { --bg:#032b3a; --panel:#05445e; --text:#d4f1f4; --accent:#75e6da; --muted:#189ab4; }
+    html[data-theme="aqua"][data-mode="light"] { --bg:#e8f8f8; --panel:#fff; --text:#032b3a; --accent:#05445e; --muted:#189ab4; }
+    html[data-theme="pop"][data-mode="dark"] { --bg:#1a1025; --panel:#2b1840; --text:#fff6a3; --accent:#ff2d55; --muted:#d6ff3f; }
+    html[data-theme="pop"][data-mode="light"] { --bg:#fff6a3; --panel:#fff; --text:#1a1025; --accent:#ff2d55; --muted:#5a4b00; }
+    html[data-theme="steel"][data-mode="dark"] { --bg:#121417; --panel:#1d2228; --text:#d9dee7; --accent:#7aa2ff; --muted:#8b93a1; }
+    html[data-theme="steel"][data-mode="light"] { --bg:#dfe4ea; --panel:#fff; --text:#121417; --accent:#1d4ed8; --muted:#4b5563; }
+    html[data-theme="parchment"][data-mode="dark"] { --bg:#2a2118; --panel:#3b2f22; --text:#f4e6c8; --accent:#d4a017; --muted:#c4b396; }
+    html[data-theme="parchment"][data-mode="light"] { --bg:#f6ecd4; --panel:#fff8ea; --text:#2a2118; --accent:#8a5a00; --muted:#6b5437; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--text); }
+    header, section { padding: 1.2rem 1.5rem; }
+    header { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); }
+    h1, h2 { margin: 0 0 .6rem; }
+    .controls { display: flex; gap: .5rem; flex-wrap: wrap; }
+    select, button { font: inherit; background: var(--panel); color: var(--text); border: 1px solid var(--accent); border-radius: 8px; padding: .35rem .6rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: .8rem; }
+    article { background: var(--panel); border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent); border-radius: 14px; padding: .9rem; }
+    svg { width: 100%; height: auto; background: color-mix(in srgb, var(--panel) 80%, black); border-radius: 12px; }
+    .note { color: var(--muted); }
+    code { font-family: var(--mono); }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <p class="note">Kinetic Gain · local workstation map</p>
+      <h1>Lyric Pattern Analyzer</h1>
+      <p>Deterministic counts. No quality score. No lyric corpus in this file.</p>
+    </div>
+    <div class="controls">
+      <label>Theme
+        <select id="theme">
+          <option value="bento">Bento Grid</option>
+          <option value="cosmic" selected>Cosmic Cyber</option>
+          <option value="swiss">Swiss Architect</option>
+          <option value="aqua">Aqua Web 2.0</option>
+          <option value="pop">Pop Brutalist</option>
+          <option value="steel">Steel Tactical</option>
+          <option value="parchment">Parchment</option>
+        </select>
+      </label>
+      <label>Mode
+        <select id="mode">
+          <option value="dark">Dark</option>
+          <option value="light">Light</option>
+        </select>
+      </label>
+    </div>
+  </header>
+  <section class="grid">
+    <article><h2>1. Product</h2><p>A local app that measures structure and repetition in lyric drafts the user already wrote.</p></article>
+    <article><h2>2. Who</h2><p>Songwriters comparing their own drafts. Not a publisher, not a co-writer, not a critic.</p></article>
+    <article><h2>3. Why it wins</h2><p>Every figure carries <code>n</code>. MATTR instead of naive TTR. Lyrics never leave the machine in the desktop build.</p></article>
+    <article><h2>4. Structure</h2><p>Pure TypeScript core → SQLite in Electron main → sandboxed React renderer. Preview uses memory + nonce words.</p></article>
+    <article><h2>5. Discovery</h2><p>Private GitHub. Pages preview is a public demo of the UI on synthetic text, <code>noindex</code>.</p></article>
+    <article><h2>6. Engage</h2><p>Paste a draft, record language, analyze, compare two versions, inspect n-grams and section Jaccard.</p></article>
+    <article><h2>7. Convert</h2><p>No account. Conversion is “keep using it on a song.” Export statistics, not the catalog.</p></article>
+    <article><h2>8. Money</h2><p>Not a billed product in this build. Reuses as a local text-pattern workstation for poems, sermons, or scripts without changing the no-score rule.</p></article>
+    <article><h2>9. Launch</h2><p>Private repo + Pages preview. Desktop unsigned. No auto-update.</p></article>
+    <article><h2>10. Improve</h2><p>Optional user-supplied pronunciation dictionary only after license verification. Keep rhyme unlabeled approximate.</p></article>
+  </section>
+  <section>
+    <h2>Pipeline</h2>
+    <svg viewBox="0 0 980 220" role="img" aria-label="Draft to statistics pipeline">
+      <g fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="20" y="70" width="140" height="70" rx="10"/>
+        <rect x="190" y="70" width="140" height="70" rx="10"/>
+        <rect x="360" y="70" width="140" height="70" rx="10"/>
+        <rect x="530" y="70" width="140" height="70" rx="10"/>
+        <rect x="700" y="30" width="250" height="150" rx="10"/>
+        <path d="M160 105h30M330 105h30M500 105h30"/>
+      </g>
+      <g fill="currentColor" font-size="14" font-family="JetBrains Mono, monospace">
+        <text x="40" y="110">UTF-8 draft</text>
+        <text x="205" y="102">sections</text>
+        <text x="205" y="120">Intl.Segmenter</text>
+        <text x="375" y="102">normalize</text>
+        <text x="375" y="120">NFC/case/punct</text>
+        <text x="548" y="110">counts + n</text>
+        <text x="720" y="60">MATTR / TTR warn</text>
+        <text x="720" y="88">repeat share</text>
+        <text x="720" y="116">n-grams 3–5</text>
+        <text x="720" y="144">Jaccard + edit</text>
+        <text x="720" y="172">orthographic echo</text>
+      </g>
+    </svg>
+    <p class="note">KPI (local only, no GA4): drafts analyzed, comparisons exported, snippet-opt-in rate. Events stay off-network in this product.</p>
+  </section>
+  <script>
+    const root = document.documentElement;
+    const saved = JSON.parse(localStorage.getItem("lpa-dashboard") || "{}");
+    if (saved.theme) root.dataset.theme = saved.theme;
+    if (saved.mode) root.dataset.mode = saved.mode;
+    const theme = document.getElementById("theme");
+    const mode = document.getElementById("mode");
+    theme.value = root.dataset.theme;
+    mode.value = root.dataset.mode;
+    function persist() {
+      root.dataset.theme = theme.value;
+      root.dataset.mode = mode.value;
+      localStorage.setItem("lpa-dashboard", JSON.stringify({ theme: theme.value, mode: mode.value }));
+    }
+    theme.addEventListener("change", persist);
+    mode.addEventListener("change", persist);
+  </script>
+</body>
+</html>

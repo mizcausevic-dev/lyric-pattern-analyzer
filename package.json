@@ -1,0 +1,52 @@
+{
+  "name": "lyric-pattern-analyzer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local songwriter workstation for draft structure and repetition statistics. No quality score, no suggestions, no network.",
+  "author": "Kinetic Gain LLC",
+  "license": "MIT",
+  "main": "./out/main/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "build:preview": "vite build --config vite.preview.config.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json",
+    "test": "vitest run",
+    "rebuild:node": "npm rebuild better-sqlite3",
+    "rebuild:electron": "electron-rebuild -f -w better-sqlite3",
+    "dist": "npm run build && electron-builder --dir --publish never",
+    "sbom": "cyclonedx-npm --output-file sbom.cdx.json --spec-version 1.6 --omit dev"
+  },
+  "dependencies": {
+    "better-sqlite3": "13.0.3",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@cyclonedx/cyclonedx-npm": "6.0.1",
+    "@electron/rebuild": "4.2.1",
+    "@types/better-sqlite3": "9.6.0",
+    "@types/node": "26.6.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "5.2.0",
+    "electron": "44.7.2",
+    "electron-builder": "26.15.3",
+    "electron-vite": "5.0.0",
+    "typescript": "5.9.2",
+    "vite": "7.3.7",
+    "vitest": "5.0.4"
+  },
+  "build": {
+    "appId": "com.kineticgain.lyric-pattern-analyzer",
+    "productName": "Lyric Pattern Analyzer",
+    "asar": true,
+    "asarUnpack": ["**/*.node"],
+    "files": ["out/**/*", "package.json"],
+    "directories": { "output": "release" },
+    "npmRebuild": true,
+    "win": { "target": ["dir"], "signAndEditExecutable": false },
+    "publish": null
+  }
+}
