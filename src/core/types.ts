@@ -136,4 +136,4 @@ export const OWNERSHIP_NOTICE =
   "Importing lyrics you do not own is your responsibility. This app stores drafts on this machine only. Exports omit lyric text unless you opt in to snippets."
 
 export const PREVIEW_PRIVACY_NOTICE =
-  "This browser preview is a public page. Do not paste unreleased lyrics here. Use the desktop app for drafts that must stay on your machine."
+  "This browser preview is a public page. The Wolf stay quiet loads are a user-supplied sample on this page. Do not paste other unreleased lyrics here. Use the desktop app for drafts that must stay on your machine."

@@ -1,6 +1,19 @@
 import type { Section } from "./types"
 
-const HEADER = /^\s*\[([^\]]*)\]\s*$/
+const BRACKET_HEADER = /^\s*\[([^\]]*)\]\s*$/
+const BARE_HEADER =
+  /^\s*(verse|chorus|hook|bridge|outro|intro|pre-?chorus|pre-?hook|refrain|tag|break|interlude)(?:\s+\d+)?(?:\s*\([^)]+\))?\s*$/i
+
+function matchHeader(line: string): string | null {
+  const bracket = line.match(BRACKET_HEADER)
+  if (bracket) {
+    const raw = bracket[1].trim()
+    return raw.length > 0 ? raw : "(empty label)"
+  }
+  const bare = line.match(BARE_HEADER)
+  if (bare) return line.trim()
+  return null
+}
 
 export function parseSections(text: string): Section[] {
   const rawLines = text.split(/\r?\n/)
@@ -20,11 +33,9 @@ export function parseSections(text: string): Section[] {
 
   rawLines.forEach((line, index) => {
     const lineNo = index + 1
-    const header = line.match(HEADER)
+    const header = matchHeader(line)
     if (header) {
-      const raw = header[1].trim()
-      const label = raw.length > 0 ? raw : "(empty label)"
-      start(label, raw.length > 0 ? raw : "", lineNo)
+      start(header, header === "(empty label)" ? "" : header, lineNo)
       return
     }
     if (!current) start("(unlabeled)", null, 1)
@@ -43,5 +54,9 @@ export function lyricLines(sections: Section[]): string[] {
 }
 
 export function sectionFamily(label: string): string {
-  return label.replace(/\s+\d+\s*$/u, "").trim().toLocaleLowerCase("en")
+  return label
+    .replace(/\s*\([^)]*\)\s*$/u, "")
+    .replace(/\s+\d+\s*$/u, "")
+    .trim()
+    .toLocaleLowerCase("en")
 }

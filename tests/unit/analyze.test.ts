@@ -6,7 +6,8 @@ import { lineDiff } from "../../src/core/diff"
 import { exportComparisonCsv, exportCsv, exportJson, exportMarkdown } from "../../src/core/export-report"
 import { jaccard, levenshtein, normalizedEditDistance } from "../../src/core/similarity"
 import { movingAverageTtr, typeTokenRatio } from "../../src/core/mattr"
-import { parseSections } from "../../src/core/parse-sections"
+import { parseSections, sectionFamily } from "../../src/core/parse-sections"
+import { WOLF_STAY_QUIET_FULL } from "../../src/core/presets"
 import { ngramCounts } from "../../src/core/repetition"
 import { hasUnspacedScript } from "../../src/core/tokenize"
 import { isAllowedUrl } from "../../src/main/security"
@@ -83,6 +84,23 @@ describe("section parsing", () => {
     expect(sections).toHaveLength(2)
     expect(sections[0].label).toBe("Chorus")
     expect(sections[1].label).toBe("Chorus")
+  })
+
+  it("parses bare VERSE / HOOK (x2) / OUTRO headers", () => {
+    const sections = parseSections("VERSE\nline one\n\nHOOK (x2)\nhook line\n\nOUTRO\nout")
+    expect(sections.map((section) => section.label)).toEqual(["VERSE", "HOOK (x2)", "OUTRO"])
+    expect(sections[0].lines).toEqual(["line one"])
+    expect(sections[1].lines).toEqual(["hook line"])
+    expect(sections[2].lines).toEqual(["out"])
+    expect(sectionFamily("HOOK (x2)")).toBe("hook")
+  })
+
+  it("splits the user-supplied sample into three sections", () => {
+    const sections = parseSections(WOLF_STAY_QUIET_FULL)
+    expect(sections.map((section) => section.label)).toEqual(["VERSE", "HOOK (x2)", "OUTRO"])
+    expect(sections[0].lines).toHaveLength(8)
+    expect(sections[1].lines).toHaveLength(4)
+    expect(sections[2].lines).toHaveLength(2)
   })
 })
 
